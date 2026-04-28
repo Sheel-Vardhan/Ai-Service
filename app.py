@@ -1,15 +1,20 @@
 from flask import Flask
 from flask_cors import CORS
 
+
 def create_app():
     app = Flask(__name__)
     CORS(app)
 
-    # Register routes (we will create them later)
+    # Register routes
     from routes.describe import describe_bp
+    from routes.recommend import recommend_bp
+
     app.register_blueprint(describe_bp)
+    app.register_blueprint(recommend_bp)
 
     return app
+
 
 app = create_app()
 
