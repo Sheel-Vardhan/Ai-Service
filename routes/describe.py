@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 from services.groq_client import call_groq
 from datetime import datetime
+import json
 
 describe_bp = Blueprint('describe', __name__)
 
@@ -13,23 +14,32 @@ def load_prompt(input_text):
 def describe():
     data = request.json
 
-    # Input validation
+    # Validation
     if not data or "text" not in data:
-        return jsonify({"error": "Invalid input"}), 400
+        return jsonify({"status": "error", "message": "Invalid input"}), 400
 
     user_input = data["text"].strip()
 
     if len(user_input) < 5:
-        return jsonify({"error": "Input too short"}), 400
+        return jsonify({"status": "error", "message": "Input too short"}), 400
 
-    # Load prompt
-    prompt = load_prompt(user_input)
+    try:
+        prompt = load_prompt(user_input)
+        ai_response = call_groq(prompt)
 
-    # Call AI
-    ai_response = call_groq(prompt)
+        # Convert AI JSON string → Python dict
+        parsed_response = json.loads(ai_response)
 
-    return jsonify({
-        "generated_at": datetime.utcnow().isoformat(),
-        "model_used": "llama-3.3-70b",
-        "description": ai_response
-    })
+        return jsonify({
+            "status": "success",
+            "generated_at": datetime.utcnow().isoformat(),
+            "model_used": "llama-3.3-70b",
+            "data": parsed_response
+        })
+
+    except Exception as e:
+        return jsonify({
+            "status": "error",
+            "message": "Failed to process request",
+            "error": str(e)
+        }), 500
