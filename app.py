@@ -9,9 +9,11 @@ def create_app():
     # Register routes
     from routes.describe import describe_bp
     from routes.recommend import recommend_bp
+    from routes.analyze import analyze_bp   # 👈 NEW
 
     app.register_blueprint(describe_bp)
     app.register_blueprint(recommend_bp)
+    app.register_blueprint(analyze_bp)      # 👈 NEW
 
     return app
 
