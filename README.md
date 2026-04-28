@@ -1,54 +1,164 @@
-# AI Service — External Audit Coordinator (Day 1)
+# 🚀 AI Service — External Audit Coordinator
 
-## Overview
+## 📌 Overview
 
-This is the AI microservice built using Flask for the External Audit Coordinator project.
-Day 1 focuses on setting up the project and creating a basic API.
+This project is an AI-powered backend service designed to assist in external audit processes. It analyzes audit issues and generates structured descriptions along with actionable recommendations using AI.
 
-## Tech Stack
+---
 
-* Python 3.11
-* Flask
-* Flask-CORS
+# 🗓️ Day 1 — Project Setup
 
-## Setup
+* Initialized Flask backend application
+* Created basic `/describe` API endpoint
+* Organized project structure (`routes`, `services`, `prompts`)
+* Tested API using Postman
+
+---
+
+# 🧠 Day 2 — AI Integration
+
+* Integrated **Groq API** for AI-powered responses
+* Implemented prompt-based response generation
+* Created dynamic prompt loading from file
+* Generated structured audit descriptions:
+
+  * Issue Summary
+  * Impact
+  * Recommendation
+
+---
+
+# ⚙️ Day 3 — Structured API Response
+
+* Converted AI output into **structured JSON format**
+* Implemented JSON parsing of AI responses
+* Added error handling and validation
+* Improved API response format for frontend integration
+
+### Example Response:
+
+```json
+{
+  "status": "success",
+  "data": {
+    "issue_summary": "...",
+    "impact": "...",
+    "recommendation": "..."
+  }
+}
+```
+
+---
+
+# 💡 Day 4 — Recommendation Engine
+
+* Built `/recommend` API endpoint
+* Generated multiple actionable recommendations
+* Designed prompt for list-based AI output
+* Returned structured list of recommendations
+
+### Example Response:
+
+```json
+{
+  "status": "success",
+  "data": {
+    "recommendations": [
+      "...",
+      "...",
+      "..."
+    ]
+  }
+}
+```
+
+---
+
+# 🔗 Day 5 — Combined Analysis Endpoint
+
+* Created `/analyze` API endpoint
+* Integrated both `/describe` and `/recommend` logic
+* Combined outputs into a single response
+* Built end-to-end AI audit assistant workflow
+
+### Example Response:
+
+```json
+{
+  "status": "success",
+  "data": {
+    "issue_summary": "...",
+    "impact": "...",
+    "recommendation": "...",
+    "recommendations": [
+      "...",
+      "..."
+    ]
+  }
+}
+```
+
+---
+
+# 📂 Project Structure
 
 ```bash
-git clone https://github.com/Sheel-Vardhan/Ai-Service.git
-cd Ai-Service
-python -m venv myenv
-myenv\Scripts\activate
+ai-service/
+│── app.py
+│── routes/
+│   ├── describe.py
+│   ├── recommend.py
+│   └── analyze.py
+│── services/
+│   └── groq_client.py
+│── prompts/
+│   ├── describe_prompt.txt
+│   └── recommend_prompt.txt
+│── requirements.txt
+│── README.md
+```
+
+---
+
+# 🔗 API Endpoints
+
+## 1. POST `/describe`
+
+Generates structured audit description
+
+## 2. POST `/recommend`
+
+Generates multiple recommendations
+
+## 3. POST `/analyze`
+
+Combines description + recommendations
+
+---
+
+# ▶️ Run the Project
+
+```bash
 pip install -r requirements.txt
 python app.py
 ```
 
-## API Endpoint
+---
 
-**POST /describe**
+# ⚠️ Notes
 
-Request:
+* `.env` file is excluded for security
+* Groq API key is required
+* Ensure dependencies are installed
 
-```json
-{
-  "text": "Sample audit issue"
-}
-```
+---
 
-Response:
+# 🎯 Status
 
-```json
-{
-  "message": "Describe endpoint working",
-  "input": "Sample audit issue"
-}
-```
+✔ Day 1 Completed
+✔ Day 2 Completed
+✔ Day 3 Completed
+✔ Day 4 Completed
+✔ Day 5 Completed
 
-## Day 1 Completed
-
-* Flask setup
-* Project structure created
-* Basic `/describe` endpoint
-
-## Next
-
-Day 2 → Groq API integration and prompt design
+🚀 Project Ready for Demo / Deployment
