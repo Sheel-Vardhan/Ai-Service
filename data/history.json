@@ -1,0 +1,178 @@
+[
+  {
+    "input": "{\n  \"text\": \"Missing financial audit documents\"\n}",
+    "output": {
+      "issue_summary": "Missing financial audit documents may lead to non-compliance with regulatory requirements and hinder the audit process",
+      "impact": "Inability to verify financial statements, potential financial misstatements, and increased risk of non-compliance penalties",
+      "recommendation": "Conduct a thorough search for missing documents, communicate with relevant parties to obtain necessary documents, and implement a document management system to prevent future occurrences",
+      "recommendations": [
+        "Conduct a thorough search of all physical and digital storage locations to locate the missing documents",
+        "Interview relevant personnel to determine the last known location and handling of the documents",
+        "Reconstruct missing documents using available data and information from other sources",
+        "Review and update the audit documentation retention policy to prevent similar incidents in the future",
+        "Consider implementing a document management system to track and store audit documents electronically"
+      ]
+    },
+    "timestamp": "2026-05-01T07:30:47.330768"
+  },
+  {
+    "input": "{\n  \"text\": \"Missing financial audit documents\"\n}",
+    "output": {
+      "issue_summary": "Missing financial audit documents may lead to non-compliance with regulatory requirements and hinder the audit process",
+      "impact": "Inability to verify financial statements, potential financial misstatements, and increased risk of non-compliance penalties",
+      "recommendation": "Conduct a thorough search for missing documents, communicate with relevant parties to obtain necessary documents, and implement a document management system to prevent future occurrences",
+      "recommendations": [
+        "Conduct a thorough search of all physical and digital storage locations to locate the missing documents",
+        "Interview relevant personnel to determine the last known location and handling of the documents",
+        "Reconstruct missing documents using available data and information from other sources",
+        "Review and update the audit documentation retention policy to prevent similar incidents in the future",
+        "Consider implementing a document management system to track and store audit documents electronically"
+      ]
+    },
+    "timestamp": "2026-05-01T07:30:51.800208"
+  },
+  {
+    "input": "\"text\": \"Missing financial audit documents\"",
+    "output": {
+      "issue_summary": "Missing financial audit documents pose a significant risk to the organization's financial transparency and accountability",
+      "impact": "Inability to conduct a thorough audit, potential non-compliance with regulatory requirements, and increased risk of financial misstatements",
+      "recommendation": "Immediately locate and retrieve the missing documents or reconstruct them if necessary, and implement a document management system to prevent future occurrences",
+      "recommendations": [
+        "Conduct a thorough search of all physical and digital storage locations to locate missing documents",
+        "Interview relevant personnel to identify potential causes of missing documents and responsibilities",
+        "Develop a document retention policy to prevent future instances of missing documents",
+        "Create a centralized document management system for easy tracking and access",
+        "Establish a regular audit document verification process to ensure completeness and accuracy"
+      ]
+    },
+    "timestamp": "2026-05-01T07:31:57.282154"
+  },
+  {
+    "input": "\"text\": \"Missing financial audit documents\"",
+    "output": {
+      "issue_summary": "Missing financial audit documents pose a significant risk to the organization's financial transparency and accountability",
+      "impact": "Inability to conduct a thorough audit, potential non-compliance with regulatory requirements, and increased risk of financial misstatements",
+      "recommendation": "Immediately locate and retrieve the missing documents or reconstruct them if necessary, and implement a document management system to prevent future occurrences",
+      "recommendations": [
+        "Conduct a thorough search of all physical and digital storage locations to locate missing documents",
+        "Interview relevant personnel to identify potential causes of missing documents and responsibilities",
+        "Develop a document retention policy to prevent future instances of missing documents",
+        "Create a centralized document management system for easy tracking and access",
+        "Establish a regular audit document verification process to ensure completeness and accuracy"
+      ]
+    },
+    "timestamp": "2026-05-01T07:36:01.342863"
+  },
+  {
+    "input": "\"text\": \"Missing financial audit documents\"",
+    "output": {
+      "issue_summary": "Missing financial audit documents pose a significant risk to the organization's financial transparency and accountability",
+      "impact": "Inability to conduct a thorough audit, potential non-compliance with regulatory requirements, and increased risk of financial misstatements",
+      "recommendation": "Immediately locate and retrieve the missing documents or reconstruct them if necessary, and implement a document management system to prevent future occurrences",
+      "recommendations": [
+        "Conduct a thorough search of all physical and digital storage locations to locate missing documents",
+        "Interview relevant personnel to identify potential causes of missing documents and responsibilities",
+        "Develop a document retention policy to prevent future instances of missing documents",
+        "Create a centralized document management system for easy tracking and access",
+        "Establish a regular audit document verification process to ensure completeness and accuracy"
+      ]
+    },
+    "timestamp": "2026-05-01T07:36:17.780872"
+  },
+  {
+    "input": "\"text\": \"Missing financial audit documents\"",
+    "output": {
+      "issue_summary": "Missing financial audit documents pose a significant risk to the organization's financial transparency and accountability",
+      "impact": "Inability to conduct a thorough audit, potential non-compliance with regulatory requirements, and increased risk of financial misstatements",
+      "recommendation": "Immediately locate and retrieve the missing documents or reconstruct them if necessary, and implement a document management system to prevent future occurrences",
+      "recommendations": [
+        "Conduct a thorough search of all physical and digital storage locations to locate missing documents",
+        "Interview relevant personnel to identify potential causes of missing documents and responsibilities",
+        "Develop a document retention policy to prevent future instances of missing documents",
+        "Create a centralized document management system for easy tracking and access",
+        "Establish a regular audit document verification process to ensure completeness and accuracy"
+      ]
+    },
+    "timestamp": "2026-05-01T07:39:31.208170"
+  },
+  {
+    "input": "Missing financial audit documents",
+    "output": {
+      "issue_summary": "Missing financial audit documents pose a significant risk to the accuracy and reliability of financial statements",
+      "impact": "Inability to verify financial transactions, potential non-compliance with regulatory requirements, and increased risk of material misstatements",
+      "recommendation": "Conduct a thorough search for missing documents, reconstruct records if necessary, and implement controls to prevent future document loss",
+      "recommendations": [
+        "Conduct a thorough search of all physical and digital storage locations to locate the missing documents",
+        "Interview relevant personnel to determine the last known location and handling of the missing documents",
+        "Reconstruct missing documents by obtaining duplicates from external sources, such as banks or vendors",
+        "Develop and implement a document management and retention policy to prevent future losses",
+        "Consider engaging a third-party expert to assist in the recovery and reconstruction of critical financial documents"
+      ]
+    },
+    "timestamp": "2026-05-01T07:43:16.812459"
+  },
+  {
+    "input": "Delayed submission of tax compliance reports causing regulatory risk",
+    "output": {
+      "issue_summary": "Delayed submission of tax compliance reports",
+      "impact": "Exposure to regulatory penalties, fines, and reputational damage",
+      "recommendation": "Implement a timely submission process, conduct regular audits, and designate a responsible person to ensure compliance with tax reporting requirements",
+      "recommendations": [
+        "Implement a tax calendar to track and monitor upcoming compliance deadlines",
+        "Designate a specific team member to oversee and coordinate tax report submissions",
+        "Automate tax report generation and submission processes where possible",
+        "Establish a review and quality control process for tax reports prior to submission",
+        "Develop a contingency plan to address any unexpected delays or issues with tax report submissions"
+      ]
+    },
+    "timestamp": "2026-05-01T07:44:26.969568"
+  },
+  {
+    "input": "Delayed submission of tax compliance reports causing regulatory risk",
+    "output": {
+      "issue_summary": "Delayed submission of tax compliance reports",
+      "impact": "Exposure to regulatory penalties, fines, and reputational damage",
+      "recommendation": "Implement a timely submission process, conduct regular audits, and designate a responsible person to ensure compliance with tax reporting requirements",
+      "recommendations": [
+        "Implement a tax calendar to track and monitor upcoming compliance deadlines",
+        "Designate a specific team member to oversee and coordinate tax report submissions",
+        "Automate tax report generation and submission processes where possible",
+        "Establish a review and quality control process for tax reports prior to submission",
+        "Develop a contingency plan to address any unexpected delays or issues with tax report submissions"
+      ]
+    },
+    "timestamp": "2026-05-01T07:44:32.205466"
+  },
+  {
+    "input": "Delayed submission of tax compliance reports causing regulatory risk",
+    "output": {
+      "issue_summary": "Delayed submission of tax compliance reports",
+      "impact": "Exposure to regulatory penalties, fines, and reputational damage",
+      "recommendation": "Implement a timely submission process, conduct regular audits, and designate a responsible person to ensure compliance with tax reporting requirements",
+      "recommendations": [
+        "Implement a tax calendar to track and monitor upcoming compliance deadlines",
+        "Designate a specific team member to oversee and coordinate tax report submissions",
+        "Automate tax report generation and submission processes where possible",
+        "Establish a review and quality control process for tax reports prior to submission",
+        "Develop a contingency plan to address any unexpected delays or issues with tax report submissions"
+      ]
+    },
+    "timestamp": "2026-05-01T07:44:57.363389"
+  },
+  {
+    "input": "Lack of proper internal controls in financial reporting leading to risk of fraud and inaccurate statements",
+    "output": {
+      "issue_summary": "Inadequate internal controls in financial reporting pose a significant risk of fraud and material misstatements",
+      "impact": "Potential for financial losses, reputational damage, and non-compliance with regulatory requirements",
+      "recommendation": "Implement robust internal controls, conduct regular audits, and provide training to personnel to ensure accurate and reliable financial reporting",
+      "recommendations": [
+        "Implement a segregation of duties policy to prevent single-person control over financial transactions",
+        "Conduct regular reviews and audits of financial statements to identify discrepancies",
+        "Establish a whistleblower policy to encourage reporting of suspicious activities",
+        "Develop and enforce a comprehensive internal control framework aligned with industry standards",
+        "Provide regular training to accounting staff on internal controls and financial reporting best practices"
+      ]
+    },
+    "timestamp": "2026-05-01T07:45:28.276886"
+  }
+]

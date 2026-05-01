@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>AI Audit Analyzer</title>
+
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -24,17 +25,25 @@
 
       button {
         margin-top: 10px;
+        margin-right: 10px;
         padding: 10px 20px;
         background: #3498db;
         color: white;
         border: none;
         border-radius: 6px;
         cursor: pointer;
-        font-size: 14px;
       }
 
       button:hover {
         background: #2980b9;
+      }
+
+      .history-btn {
+        background: #2ecc71;
+      }
+
+      .history-btn:hover {
+        background: #27ae60;
       }
 
       #output {
@@ -59,57 +68,114 @@
         color: #888;
         font-style: italic;
       }
+
+      .history-item {
+        border-bottom: 1px solid #eee;
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+      }
     </style>
   </head>
+
   <body>
     <h2>🤖 AI Audit Analyzer</h2>
 
     <textarea id="inputText" placeholder="Enter audit issue..."></textarea
     ><br />
 
-    <button onclick="analyze()">Analyze</button>
+    <!-- ✅ FIXED BUTTON (no reload) -->
+    <button type="button" onclick="analyze()">Analyze</button>
+
+    <button type="button" class="history-btn" onclick="loadHistory()">
+      View History
+    </button>
 
     <div id="output"></div>
 
     <script>
       async function analyze() {
-        const text = document.getElementById("inputText").value;
+        const text = document.getElementById("inputText").value.trim();
 
         if (!text) {
           alert("Please enter some text");
           return;
         }
 
+        // Show loading
         document.getElementById("output").innerHTML =
           "<p class='loading'>Analyzing... ⏳</p>";
 
         try {
           const response = await fetch("http://localhost:5000/analyze", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ text }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ text: text }),
           });
 
-          const data = await response.json();
+          const result = await response.json();
 
+          if (!result.data) {
+            throw new Error("Invalid response");
+          }
+
+          // ✅ SHOW OUTPUT (NO DISAPPEAR)
           document.getElementById("output").innerHTML = `
-            <h4>📌 Issue Summary:</h4>
-            <p>${data.data.issue_summary}</p>
+          <h4>📌 Issue Summary:</h4>
+          <p>${result.data.issue_summary}</p>
 
-            <h4>⚠️ Impact:</h4>
-            <p>${data.data.impact}</p>
+          <h4>⚠️ Impact:</h4>
+          <p>${result.data.impact}</p>
 
-            <h4>✅ Recommendation:</h4>
-            <p>${data.data.recommendation}</p>
+          <h4>✅ Recommendation:</h4>
+          <p>${result.data.recommendation}</p>
 
-            <h4>📋 Detailed Recommendations:</h4>
-            <ul>
-                ${data.data.recommendations.map((r) => `<li>${r}</li>`).join("")}
-            </ul>
+          <h4>📋 Detailed Recommendations:</h4>
+          <ul>
+            ${result.data.recommendations.map((r) => `<li>${r}</li>`).join("")}
+          </ul>
         `;
         } catch (error) {
           document.getElementById("output").innerHTML =
             "<p style='color:red;'>Error fetching response</p>";
+        }
+      }
+
+      async function loadHistory() {
+        document.getElementById("output").innerHTML =
+          "<p class='loading'>Loading history... 📜</p>";
+
+        try {
+          const response = await fetch("http://localhost:5000/history");
+          const data = await response.json();
+
+          if (!data.length) {
+            document.getElementById("output").innerHTML =
+              "<p>No history found</p>";
+            return;
+          }
+
+          let html = "<h3>📜 History</h3>";
+
+          data
+            .slice()
+            .reverse()
+            .forEach((item) => {
+              html += `
+            <div class="history-item">
+              <p><b>Input:</b> ${item.input}</p>
+              <p><b>Issue:</b> ${item.output.issue_summary}</p>
+              <p><b>Impact:</b> ${item.output.impact}</p>
+              <p><b>Recommendation:</b> ${item.output.recommendation}</p>
+            </div>
+          `;
+            });
+
+          document.getElementById("output").innerHTML = html;
+        } catch (error) {
+          document.getElementById("output").innerHTML =
+            "<p style='color:red;'>Error loading history</p>";
         }
       }
     </script>
