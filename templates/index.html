@@ -83,9 +83,8 @@
     <textarea id="inputText" placeholder="Enter audit issue..."></textarea
     ><br />
 
-    <!-- ✅ FIXED BUTTON (no reload) -->
+    <!-- Buttons -->
     <button type="button" onclick="analyze()">Analyze</button>
-
     <button type="button" class="history-btn" onclick="loadHistory()">
       View History
     </button>
@@ -93,6 +92,9 @@
     <div id="output"></div>
 
     <script>
+      // ✅ AUTO DETECT BASE URL (works for localhost + deployment)
+      const BASE_URL = window.location.origin;
+
       async function analyze() {
         const text = document.getElementById("inputText").value.trim();
 
@@ -101,12 +103,11 @@
           return;
         }
 
-        // Show loading
         document.getElementById("output").innerHTML =
           "<p class='loading'>Analyzing... ⏳</p>";
 
         try {
-          const response = await fetch("http://localhost:5000/analyze", {
+          const response = await fetch(`${BASE_URL}/analyze`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -120,22 +121,22 @@
             throw new Error("Invalid response");
           }
 
-          // ✅ SHOW OUTPUT (NO DISAPPEAR)
+          // ✅ DISPLAY RESULT (no disappearing)
           document.getElementById("output").innerHTML = `
-          <h4>📌 Issue Summary:</h4>
-          <p>${result.data.issue_summary}</p>
+            <h4>📌 Issue Summary:</h4>
+            <p>${result.data.issue_summary}</p>
 
-          <h4>⚠️ Impact:</h4>
-          <p>${result.data.impact}</p>
+            <h4>⚠️ Impact:</h4>
+            <p>${result.data.impact}</p>
 
-          <h4>✅ Recommendation:</h4>
-          <p>${result.data.recommendation}</p>
+            <h4>✅ Recommendation:</h4>
+            <p>${result.data.recommendation}</p>
 
-          <h4>📋 Detailed Recommendations:</h4>
-          <ul>
-            ${result.data.recommendations.map((r) => `<li>${r}</li>`).join("")}
-          </ul>
-        `;
+            <h4>📋 Detailed Recommendations:</h4>
+            <ul>
+              ${result.data.recommendations.map((r) => `<li>${r}</li>`).join("")}
+            </ul>
+          `;
         } catch (error) {
           document.getElementById("output").innerHTML =
             "<p style='color:red;'>Error fetching response</p>";
@@ -147,7 +148,7 @@
           "<p class='loading'>Loading history... 📜</p>";
 
         try {
-          const response = await fetch("http://localhost:5000/history");
+          const response = await fetch(`${BASE_URL}/history`);
           const data = await response.json();
 
           if (!data.length) {
@@ -163,13 +164,13 @@
             .reverse()
             .forEach((item) => {
               html += `
-            <div class="history-item">
-              <p><b>Input:</b> ${item.input}</p>
-              <p><b>Issue:</b> ${item.output.issue_summary}</p>
-              <p><b>Impact:</b> ${item.output.impact}</p>
-              <p><b>Recommendation:</b> ${item.output.recommendation}</p>
-            </div>
-          `;
+                <div class="history-item">
+                  <p><b>Input:</b> ${item.input}</p>
+                  <p><b>Issue:</b> ${item.output.issue_summary}</p>
+                  <p><b>Impact:</b> ${item.output.impact}</p>
+                  <p><b>Recommendation:</b> ${item.output.recommendation}</p>
+                </div>
+              `;
             });
 
           document.getElementById("output").innerHTML = html;
