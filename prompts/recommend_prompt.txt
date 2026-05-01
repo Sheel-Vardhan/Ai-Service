@@ -1,23 +1,12 @@
-You are a senior audit consultant.
+Based on the audit issue below, return ONLY valid JSON.
 
-Based on the given audit issue, generate 4–5 clear and actionable recommendations.
-
-Input:
-{input}
-
-Output format:
+Format:
 {
-  "recommendations": [
-    "...",
-    "...",
-    "...",
-    "...",
-    "..."
-  ]
+  "recommendations": ["...", "...", "..."]
 }
 
-Rules:
-- Return ONLY JSON
-- Each recommendation should be practical and specific
-- Avoid repetition
-- Keep responses concise
+STRICT RULE:
+- Only JSON
+- No explanation
+
+Input: {input}
