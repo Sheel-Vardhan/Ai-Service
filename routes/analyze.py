@@ -7,10 +7,26 @@ from utils.response import success_response, error_response
 
 analyze_bp = Blueprint('analyze', __name__)
 
+
 def load_prompt(file_path, input_text):
     with open(file_path, "r") as f:
         template = f.read()
     return template.replace("{input}", input_text)
+
+
+# 🔥 NEW FUNCTION: Save history
+def save_history(entry):
+    try:
+        with open("data/history.json", "r") as f:
+            data = json.load(f)
+    except:
+        data = []
+
+    data.append(entry)
+
+    with open("data/history.json", "w") as f:
+        json.dump(data, f, indent=2)
+
 
 @analyze_bp.route('/analyze', methods=['POST'])
 def analyze():
@@ -27,21 +43,33 @@ def analyze():
     try:
         logger.info(f"Processing input: {user_input}")
 
+        # Load prompts
         describe_prompt = load_prompt("prompts/describe_prompt.txt", user_input)
         recommend_prompt = load_prompt("prompts/recommend_prompt.txt", user_input)
 
+        # Call AI
         describe_response = call_groq(describe_prompt)
         recommend_response = call_groq(recommend_prompt)
 
+        # Parse responses
         describe_data = json.loads(describe_response)
         recommend_data = json.loads(recommend_response)
 
+        # Combine results
         combined_data = {
             "issue_summary": describe_data.get("issue_summary"),
             "impact": describe_data.get("impact"),
             "recommendation": describe_data.get("recommendation"),
             "recommendations": recommend_data.get("recommendations", [])
         }
+
+        # 🔥 SAVE HISTORY
+        history_entry = {
+            "input": user_input,
+            "output": combined_data,
+            "timestamp": datetime.utcnow().isoformat()
+        }
+        save_history(history_entry)
 
         logger.info("Successfully generated analysis")
 
