@@ -1,19 +1,16 @@
-You are a senior audit expert.
+Analyze the audit issue below.
 
-Analyze the given issue and return output STRICTLY in JSON format.
+Return ONLY valid JSON. Do not include any explanation or text.
 
-Input:
-{input}
-
-Output format:
+Format:
 {
   "issue_summary": "...",
   "impact": "...",
   "recommendation": "..."
 }
 
-Rules:
-- Output ONLY valid JSON
-- No extra text
-- Be professional and specific
-- Keep response concise
+STRICT RULE:
+- Output must be valid JSON
+- No extra text before or after
+
+Input: {input}

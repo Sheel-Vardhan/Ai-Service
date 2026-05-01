@@ -2,23 +2,48 @@ from flask import Blueprint, request, jsonify
 from services.groq_client import call_groq
 from datetime import datetime
 import json
+import os
 from utils.logger import logger
 from utils.response import success_response, error_response
 
+# ✅ DEFINE BLUEPRINT FIRST
 analyze_bp = Blueprint('analyze', __name__)
 
 
 def load_prompt(file_path, input_text):
-    with open(file_path, "r") as f:
+    with open(file_path, "r", encoding="utf-8") as f:
         template = f.read()
     return template.replace("{input}", input_text)
 
 
-# 🔥 NEW FUNCTION: Save history
+# ✅ SMART JSON EXTRACTOR (NEW)
+def extract_json(text):
+    try:
+        return json.loads(text)
+    except:
+        try:
+            start = text.find("{")
+            end = text.rfind("}") + 1
+            if start != -1 and end != -1:
+                return json.loads(text[start:end])
+        except:
+            pass
+    return None
+
+
+# ✅ SAFE HISTORY SAVE
 def save_history(entry):
     try:
+        if not os.path.exists("data"):
+            os.makedirs("data")
+
+        if not os.path.exists("data/history.json"):
+            with open("data/history.json", "w") as f:
+                json.dump([], f)
+
         with open("data/history.json", "r") as f:
             data = json.load(f)
+
     except:
         data = []
 
@@ -30,7 +55,7 @@ def save_history(entry):
 
 @analyze_bp.route('/analyze', methods=['POST'])
 def analyze():
-    data = request.json
+    data = request.get_json()
 
     if not data or "text" not in data:
         return jsonify(error_response("Invalid input")), 400
@@ -51,19 +76,36 @@ def analyze():
         describe_response = call_groq(describe_prompt)
         recommend_response = call_groq(recommend_prompt)
 
-        # Parse responses
-        describe_data = json.loads(describe_response)
-        recommend_data = json.loads(recommend_response)
+        # ✅ DEBUG (IMPORTANT)
+        print("RAW DESCRIBE:", describe_response)
+        print("RAW RECOMMEND:", recommend_response)
 
-        # Combine results
+        # ✅ SMART PARSING
+        describe_data = extract_json(describe_response)
+        if not describe_data:
+            logger.error("Describe JSON parsing failed")
+            describe_data = {
+                "issue_summary": "Error parsing AI response",
+                "impact": "Unknown",
+                "recommendation": "Retry analysis"
+            }
+
+        recommend_data = extract_json(recommend_response)
+        if not recommend_data:
+            logger.error("Recommend JSON parsing failed")
+            recommend_data = {
+                "recommendations": []
+            }
+
+        # ✅ FORCE STRUCTURE
         combined_data = {
-            "issue_summary": describe_data.get("issue_summary"),
-            "impact": describe_data.get("impact"),
-            "recommendation": describe_data.get("recommendation"),
+            "issue_summary": describe_data.get("issue_summary", "Not available"),
+            "impact": describe_data.get("impact", "Not available"),
+            "recommendation": describe_data.get("recommendation", "Not available"),
             "recommendations": recommend_data.get("recommendations", [])
         }
 
-        # 🔥 SAVE HISTORY
+        # Save history
         history_entry = {
             "input": user_input,
             "output": combined_data,

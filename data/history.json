@@ -174,5 +174,39 @@
       ]
     },
     "timestamp": "2026-05-01T07:45:28.276886"
+  },
+  {
+    "input": "\"text\": \"Missing audit documents\"",
+    "output": {
+      "issue_summary": "Error parsing AI response",
+      "impact": "Unknown",
+      "recommendation": "Retry analysis",
+      "recommendations": []
+    },
+    "timestamp": "2026-05-01T09:48:23.424112"
+  },
+  {
+    "input": "\"text\": \"Missing audit documents\"",
+    "output": {
+      "issue_summary": "Error parsing AI response",
+      "impact": "Unknown",
+      "recommendation": "Retry analysis",
+      "recommendations": []
+    },
+    "timestamp": "2026-05-01T09:48:40.148231"
+  },
+  {
+    "input": "\"text\": \"Missing audit documents\"",
+    "output": {
+      "issue_summary": "Missing audit documents",
+      "impact": "Inability to verify compliance and potential regulatory issues",
+      "recommendation": "Obtain and retain all necessary audit documents",
+      "recommendations": [
+        "Conduct a thorough search for missing documents",
+        "Reconstruct missing documents if possible",
+        "Implement a document management system to prevent future losses"
+      ]
+    },
+    "timestamp": "2026-05-01T09:52:25.535997"
   }
 ]
