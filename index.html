@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+  <head>
+    <title>AI Audit Analyzer</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f4f6f8;
+        padding: 40px;
+      }
+
+      h2 {
+        color: #2c3e50;
+      }
+
+      textarea {
+        width: 500px;
+        height: 120px;
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+      }
+
+      button {
+        margin-top: 10px;
+        padding: 10px 20px;
+        background: #3498db;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+      }
+
+      button:hover {
+        background: #2980b9;
+      }
+
+      #output {
+        margin-top: 20px;
+        padding: 20px;
+        background: white;
+        border-radius: 8px;
+        width: 500px;
+        box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      h4 {
+        margin-bottom: 5px;
+        color: #34495e;
+      }
+
+      ul {
+        padding-left: 20px;
+      }
+
+      .loading {
+        color: #888;
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>🤖 AI Audit Analyzer</h2>
+
+    <textarea id="inputText" placeholder="Enter audit issue..."></textarea
+    ><br />
+
+    <button onclick="analyze()">Analyze</button>
+
+    <div id="output"></div>
+
+    <script>
+      async function analyze() {
+        const text = document.getElementById("inputText").value;
+
+        if (!text) {
+          alert("Please enter some text");
+          return;
+        }
+
+        document.getElementById("output").innerHTML =
+          "<p class='loading'>Analyzing... ⏳</p>";
+
+        try {
+          const response = await fetch("http://localhost:5000/analyze", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ text }),
+          });
+
+          const data = await response.json();
+
+          document.getElementById("output").innerHTML = `
+            <h4>📌 Issue Summary:</h4>
+            <p>${data.data.issue_summary}</p>
+
+            <h4>⚠️ Impact:</h4>
+            <p>${data.data.impact}</p>
+
+            <h4>✅ Recommendation:</h4>
+            <p>${data.data.recommendation}</p>
+
+            <h4>📋 Detailed Recommendations:</h4>
+            <ul>
+                ${data.data.recommendations.map((r) => `<li>${r}</li>`).join("")}
+            </ul>
+        `;
+        } catch (error) {
+          document.getElementById("output").innerHTML =
+            "<p style='color:red;'>Error fetching response</p>";
+        }
+      }
+    </script>
+  </body>
+</html>
