@@ -1,6 +1,6 @@
-from flask import Flask
+from flask import Flask, render_template   # ✅ import here (top)
 from flask_cors import CORS
-import os   # 👈 NEW
+import os
 
 
 def create_app():
@@ -18,6 +18,11 @@ def create_app():
     app.register_blueprint(analyze_bp)
     app.register_blueprint(history_bp)
 
+    # ✅ HOME ROUTE (VERY IMPORTANT)
+    @app.route("/")
+    def home():
+        return render_template("index.html")
+
     return app
 
 
@@ -26,6 +31,6 @@ app = create_app()
 if __name__ == "__main__":
     app.run(
         host="0.0.0.0",
-        port=int(os.environ.get("PORT", 5000)),  # 👈 IMPORTANT
+        port=int(os.environ.get("PORT", 5000)),
         debug=True
     )
