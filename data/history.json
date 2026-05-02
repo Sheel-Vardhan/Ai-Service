@@ -248,5 +248,31 @@
       ]
     },
     "timestamp": "2026-05-02T05:10:59.216525"
+  },
+  {
+    "input": "Delayed tax compliance reporting",
+    "output": {
+      "issue_summary": "The company has failed to submit tax compliance reports on time, which may lead to penalties and fines.",
+      "impact": "Delayed tax compliance reporting may result in financial penalties, damage to the company's reputation, and potential loss of business licenses or certifications.",
+      "recommendation": "Implement a timely and automated tax reporting process, ensure accurate and complete data, and designate a responsible person to oversee and review tax compliance reports before submission to avoid future delays.",
+      "recommendations": [
+        {
+          "id": 1,
+          "description": "Implement a automated tax compliance reporting system to ensure timely submissions",
+          "risk": "High"
+        },
+        {
+          "id": 2,
+          "description": "Develop and maintain a tax calendar to track and monitor compliance deadlines",
+          "risk": "Medium"
+        },
+        {
+          "id": 3,
+          "description": "Provide regular training to accounting staff on tax compliance requirements and reporting procedures",
+          "risk": "Low"
+        }
+      ]
+    },
+    "timestamp": "2026-05-02T05:35:30.865437"
   }
 ]
