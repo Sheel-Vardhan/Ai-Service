@@ -208,5 +208,19 @@
       ]
     },
     "timestamp": "2026-05-01T09:52:25.535997"
+  },
+  {
+    "input": "\"text\": \"Missing supporting documents for financial transactions\"",
+    "output": {
+      "issue_summary": "Missing supporting documents for financial transactions",
+      "impact": "Inability to verify financial transaction accuracy and compliance with regulations",
+      "recommendation": "Obtain and maintain supporting documents for all financial transactions to ensure audit trail and compliance",
+      "recommendations": [
+        "Obtain and maintain supporting documents for all financial transactions",
+        "Implement a system to track and verify documentation for transactions",
+        "Provide training to staff on the importance of maintaining accurate records"
+      ]
+    },
+    "timestamp": "2026-05-01T09:58:44.116071"
   }
 ]
