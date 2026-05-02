@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
 from services.groq_client import call_groq
+from services.cache import get_cache, set_cache   # ✅ NEW
 from datetime import datetime
 import json
 import os
@@ -16,7 +17,7 @@ def load_prompt(file_path, input_text):
     return template.replace("{input}", input_text)
 
 
-# ✅ SMART JSON EXTRACTOR (NEW)
+# ✅ SMART JSON EXTRACTOR
 def extract_json(text):
     try:
         return json.loads(text)
@@ -24,16 +25,21 @@ def extract_json(text):
         try:
             start = text.find("{")
             end = text.rfind("}") + 1
+
             if start != -1 and end != -1:
                 return json.loads(text[start:end])
+
         except:
             pass
+
     return None
 
 
 # ✅ SAFE HISTORY SAVE
 def save_history(entry):
+
     try:
+
         if not os.path.exists("data"):
             os.makedirs("data")
 
@@ -55,6 +61,7 @@ def save_history(entry):
 
 @analyze_bp.route('/analyze', methods=['POST'])
 def analyze():
+
     data = request.get_json()
 
     if not data or "text" not in data:
@@ -66,44 +73,93 @@ def analyze():
         return jsonify(error_response("Input too short")), 400
 
     try:
+
         logger.info(f"Processing input: {user_input}")
 
+        # ✅ CHECK REDIS CACHE FIRST
+        cached_response = get_cache(user_input)
+
+        if cached_response:
+
+            logger.info("Returning cached response")
+
+            return jsonify({
+                "status": "success",
+                "data": json.loads(cached_response),
+                "cached": True
+            })
+
         # Load prompts
-        describe_prompt = load_prompt("prompts/describe_prompt.txt", user_input)
-        recommend_prompt = load_prompt("prompts/recommend_prompt.txt", user_input)
+        describe_prompt = load_prompt(
+            "prompts/describe_prompt.txt",
+            user_input
+        )
+
+        recommend_prompt = load_prompt(
+            "prompts/recommend_prompt.txt",
+            user_input
+        )
 
         # Call AI
         describe_response = call_groq(describe_prompt)
         recommend_response = call_groq(recommend_prompt)
 
-        # ✅ DEBUG (IMPORTANT)
+        # DEBUG
         print("RAW DESCRIBE:", describe_response)
         print("RAW RECOMMEND:", recommend_response)
 
-        # ✅ SMART PARSING
+        # Parse describe response
         describe_data = extract_json(describe_response)
+
         if not describe_data:
+
             logger.error("Describe JSON parsing failed")
+
             describe_data = {
                 "issue_summary": "Error parsing AI response",
                 "impact": "Unknown",
                 "recommendation": "Retry analysis"
             }
 
+        # Parse recommendation response
         recommend_data = extract_json(recommend_response)
+
         if not recommend_data:
+
             logger.error("Recommend JSON parsing failed")
+
             recommend_data = {
                 "recommendations": []
             }
 
-        # ✅ FORCE STRUCTURE
+        # Final structured output
         combined_data = {
-            "issue_summary": describe_data.get("issue_summary", "Not available"),
-            "impact": describe_data.get("impact", "Not available"),
-            "recommendation": describe_data.get("recommendation", "Not available"),
-            "recommendations": recommend_data.get("recommendations", [])
+            "issue_summary": describe_data.get(
+                "issue_summary",
+                "Not available"
+            ),
+
+            "impact": describe_data.get(
+                "impact",
+                "Not available"
+            ),
+
+            "recommendation": describe_data.get(
+                "recommendation",
+                "Not available"
+            ),
+
+            "recommendations": recommend_data.get(
+                "recommendations",
+                []
+            )
         }
+
+        # ✅ SAVE TO REDIS CACHE
+        set_cache(
+            user_input,
+            json.dumps(combined_data)
+        )
 
         # Save history
         history_entry = {
@@ -111,6 +167,7 @@ def analyze():
             "output": combined_data,
             "timestamp": datetime.utcnow().isoformat()
         }
+
         save_history(history_entry)
 
         logger.info("Successfully generated analysis")
@@ -121,6 +178,9 @@ def analyze():
         })
 
     except Exception as e:
+
         logger.error(f"Error: {str(e)}")
 
-        return jsonify(error_response("Failed to analyze input")), 500
+        return jsonify(
+            error_response("Failed to analyze input")
+        ), 500

@@ -1,12 +1,10 @@
-Based on the audit issue below, return ONLY valid JSON.
+Generate 3 audit recommendations.
 
-Format:
+Return JSON only:
+
 {
-  "recommendations": ["...", "...", "..."]
+  "recommendations": []
 }
 
-STRICT RULE:
-- Only JSON
-- No explanation
-
-Input: {input}
+Input:
+{input}

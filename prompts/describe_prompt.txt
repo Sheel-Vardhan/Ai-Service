@@ -1,16 +1,12 @@
-Analyze the audit issue below.
+Analyze audit issue.
 
-Return ONLY valid JSON. Do not include any explanation or text.
+Return JSON only:
 
-Format:
 {
-  "issue_summary": "...",
-  "impact": "...",
-  "recommendation": "..."
+  "issue_summary": "",
+  "impact": "",
+  "recommendation": ""
 }
 
-STRICT RULE:
-- Output must be valid JSON
-- No extra text before or after
-
-Input: {input}
+Input:
+{input}
