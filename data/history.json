@@ -222,5 +222,31 @@
       ]
     },
     "timestamp": "2026-05-01T09:58:44.116071"
+  },
+  {
+    "input": "Missing audit documents",
+    "output": {
+      "issue_summary": "Missing audit documents",
+      "impact": "Inability to verify compliance, potential regulatory issues, and increased risk of non-conformity",
+      "recommendation": "Conduct a thorough search for missing documents, recreate if necessary, and implement a document management system to prevent future occurrences",
+      "recommendations": [
+        {
+          "id": 1,
+          "description": "Develop a centralized document management system to store and track all audit-related documents",
+          "action": "Implement a document management system within the next 6 months"
+        },
+        {
+          "id": 2,
+          "description": "Conduct a thorough search of all existing audit documents and organize them in a secure and accessible location",
+          "action": "Complete the document search and organization within the next 3 months"
+        },
+        {
+          "id": 3,
+          "description": "Establish a standard operating procedure for maintaining and updating audit documents to prevent future losses",
+          "action": "Develop and implement the standard operating procedure within the next 9 months"
+        }
+      ]
+    },
+    "timestamp": "2026-05-02T05:10:59.216525"
   }
 ]
