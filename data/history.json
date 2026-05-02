@@ -274,5 +274,57 @@
       ]
     },
     "timestamp": "2026-05-02T05:35:30.865437"
+  },
+  {
+    "input": "Delayed tax compliance reporting",
+    "output": {
+      "issue_summary": "Delayed tax compliance reporting may result in penalties, fines, and damage to the company's reputation due to non-adherence to regulatory requirements.",
+      "impact": "The delay may lead to additional costs, interest on late payments, and potential legal action, ultimately affecting the company's financial stability and credibility.",
+      "recommendation": "Implement a timely and automated tax compliance reporting system, ensure regular review and update of tax laws and regulations, and provide training to the accounting team to prevent future delays.",
+      "recommendations": [
+        {
+          "id": 1,
+          "description": "Implement a automated tax compliance reporting system to ensure timely submissions",
+          "risk": "High"
+        },
+        {
+          "id": 2,
+          "description": "Conduct regular reviews of tax compliance reporting processes to identify and address delays",
+          "risk": "Medium"
+        },
+        {
+          "id": 3,
+          "description": "Provide training to staff on tax compliance reporting requirements and deadlines to minimize human error",
+          "risk": "Low"
+        }
+      ]
+    },
+    "timestamp": "2026-05-02T17:53:40.987319"
+  },
+  {
+    "input": "missing audit",
+    "output": {
+      "issue_summary": "Missing audit records or incomplete audit trails",
+      "impact": "Inability to track and monitor system activities, potentially leading to undetected security breaches or data tampering",
+      "recommendation": "Implement a comprehensive audit logging system to capture all system activities, including user actions, system changes, and data access",
+      "recommendations": [
+        {
+          "id": 1,
+          "description": "Conduct a comprehensive audit to identify and address potential risks and vulnerabilities",
+          "priority": "High"
+        },
+        {
+          "id": 2,
+          "description": "Develop and implement a regular audit schedule to ensure ongoing monitoring and evaluation of internal controls",
+          "priority": "Medium"
+        },
+        {
+          "id": 3,
+          "description": "Provide training to personnel on audit procedures and protocols to ensure a thorough understanding of the audit process",
+          "priority": "Low"
+        }
+      ]
+    },
+    "timestamp": "2026-05-02T18:00:31.708922"
   }
 ]
