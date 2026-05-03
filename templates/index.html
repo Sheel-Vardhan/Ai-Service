@@ -74,17 +74,29 @@
         margin-bottom: 10px;
         padding-bottom: 10px;
       }
+
+      .error {
+        color: red;
+        font-weight: bold;
+      }
+
+      .success {
+        color: green;
+      }
     </style>
   </head>
 
   <body>
     <h2>🤖 AI Audit Analyzer</h2>
 
-    <textarea id="inputText" placeholder="Enter audit issue..."></textarea
-    ><br />
+    <textarea
+      id="inputText"
+      placeholder="Enter audit issue..."
+    ></textarea><br />
 
     <!-- Buttons -->
     <button type="button" onclick="analyze()">Analyze</button>
+
     <button type="button" class="history-btn" onclick="loadHistory()">
       View History
     </button>
@@ -92,7 +104,6 @@
     <div id="output"></div>
 
     <script>
-      // ✅ AUTO DETECT BASE URL (works for localhost + deployment)
       const BASE_URL = window.location.origin;
 
       async function analyze() {
@@ -112,34 +123,75 @@
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ text: text }),
+            body: JSON.stringify({ text }),
           });
 
           const result = await response.json();
 
+          console.log("API Response:", result);
+
           if (!result.data) {
-            throw new Error("Invalid response");
+            throw new Error("Invalid API response");
           }
 
-          // ✅ DISPLAY RESULT (no disappearing)
+          // ✅ Handle recommendations safely
+          let recommendationsHTML = "";
+
+          if (
+            Array.isArray(result.data.recommendations) &&
+            result.data.recommendations.length > 0
+          ) {
+            recommendationsHTML = result.data.recommendations
+              .map((r) => {
+                // Handle string recommendation
+                if (typeof r === "string") {
+                  return `<li>${r}</li>`;
+                }
+
+                // Handle object recommendation
+                if (typeof r === "object") {
+                  return `<li>${
+                    r.recommendation ||
+                    r.text ||
+                    JSON.stringify(r)
+                  }</li>`;
+                }
+
+                return `<li>${r}</li>`;
+              })
+              .join("");
+          } else {
+            recommendationsHTML =
+              "<li>No recommendations available</li>";
+          }
+
           document.getElementById("output").innerHTML = `
             <h4>📌 Issue Summary:</h4>
-            <p>${result.data.issue_summary}</p>
+            <p>${result.data.issue_summary || "N/A"}</p>
 
             <h4>⚠️ Impact:</h4>
-            <p>${result.data.impact}</p>
+            <p>${result.data.impact || "N/A"}</p>
 
             <h4>✅ Recommendation:</h4>
-            <p>${result.data.recommendation}</p>
+            <p>${result.data.recommendation || "N/A"}</p>
 
             <h4>📋 Detailed Recommendations:</h4>
             <ul>
-              ${result.data.recommendations.map((r) => `<li>${r}</li>`).join("")}
+              ${recommendationsHTML}
             </ul>
+
+            <p class="success">
+              Generated Successfully ✅
+            </p>
           `;
         } catch (error) {
-          document.getElementById("output").innerHTML =
-            "<p style='color:red;'>Error fetching response</p>";
+          console.error(error);
+
+          document.getElementById("output").innerHTML = `
+            <p class="error">
+              Error fetching response from server
+            </p>
+          `;
         }
       }
 
@@ -149,9 +201,13 @@
 
         try {
           const response = await fetch(`${BASE_URL}/history`);
+
           const data = await response.json();
 
-          if (!data.length) {
+          // Handle different response structures
+          const history = data.data || data;
+
+          if (!Array.isArray(history) || history.length === 0) {
             document.getElementById("output").innerHTML =
               "<p>No history found</p>";
             return;
@@ -159,24 +215,50 @@
 
           let html = "<h3>📜 History</h3>";
 
-          data
+          history
             .slice()
             .reverse()
             .forEach((item) => {
               html += `
                 <div class="history-item">
-                  <p><b>Input:</b> ${item.input}</p>
-                  <p><b>Issue:</b> ${item.output.issue_summary}</p>
-                  <p><b>Impact:</b> ${item.output.impact}</p>
-                  <p><b>Recommendation:</b> ${item.output.recommendation}</p>
+                  <p><b>Input:</b> ${item.input || "N/A"}</p>
+
+                  <p><b>Issue:</b>
+                    ${
+                      item.output?.issue_summary || "N/A"
+                    }
+                  </p>
+
+                  <p><b>Impact:</b>
+                    ${
+                      item.output?.impact || "N/A"
+                    }
+                  </p>
+
+                  <p><b>Recommendation:</b>
+                    ${
+                      item.output?.recommendation || "N/A"
+                    }
+                  </p>
+
+                  <p><b>Timestamp:</b>
+                    ${
+                      item.timestamp || "N/A"
+                    }
+                  </p>
                 </div>
               `;
             });
 
           document.getElementById("output").innerHTML = html;
         } catch (error) {
-          document.getElementById("output").innerHTML =
-            "<p style='color:red;'>Error loading history</p>";
+          console.error(error);
+
+          document.getElementById("output").innerHTML = `
+            <p class="error">
+              Error loading history
+            </p>
+          `;
         }
       }
     </script>
